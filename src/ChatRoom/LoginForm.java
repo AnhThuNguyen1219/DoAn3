@@ -27,7 +27,7 @@ public class LoginForm extends JFrame implements ActionListener{
 		//ID
 		this.add(new Label("ID:"));
 		this.add(id);
-		id.setEditable(true);
+//		id.setEditable(true);
 		
 		//Password
 		this.add(new Label("Password:"));

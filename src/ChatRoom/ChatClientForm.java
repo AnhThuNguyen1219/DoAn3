@@ -19,7 +19,7 @@ public class ChatClientForm extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ChatClientForm ccf = new ChatClientForm();
+		 new ChatClientForm();
 	}
 
 	@Override

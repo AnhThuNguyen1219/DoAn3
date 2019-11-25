@@ -3,6 +3,7 @@ package ChatRoom;
 import java.io.*;
 import java.net.*;
 
+
 public class Server extends Thread{
 	DataInputStream dis;
 	DataOutputStream dos;
@@ -27,19 +28,15 @@ public class Server extends Thread{
 		}
 		return null;
 	}
-	public void sendMess()
+	public void sendMess(String text) throws IOException
 	{
-		
+		dos=new DataOutputStream(accept().getOutputStream());
+		dos.writeUTF(text);
 	}
-	public void receiveMess()
+	public String receiveMess() throws IOException 
 	{
-		
+		dis = new DataInputStream(accept().getInputStream());
+		return dis.readUTF();
 	}
 	
-	public static void main(String[] args) 
-	{
-		
-
-	}
-
 }

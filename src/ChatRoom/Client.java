@@ -2,60 +2,32 @@ package ChatRoom;
 import java.io.*;
 import java.net.*;
 
-public class Client extends Thread {
+public class Client  {
 	DataOutputStream dos;
 	DataInputStream dis;
-	InputStreamReader isr; 
-	BufferedReader br ;
+	Socket s;
+	BufferedReader br; 
 	public Client (String host, int port) throws Exception
 	{
-		Socket s = new Socket(host, port);
-		dos=new DataOutputStream(s.getOutputStream());
-		dis=new DataInputStream(s.getInputStream());
-		isr = new InputStreamReader(System.in);
-		br= new BufferedReader(isr);
+		s = new Socket(host, port);
+		br = new BufferedReader(new InputStreamReader(System.in));
 	}
-	
-	public void send(String send) throws IOException
+	public String receiveMess() throws IOException
 	{
-		dos.writeUTF(send);
+		dis = new DataInputStream(s.getInputStream());
+		return dis.readUTF();
 	}
-	
-	public String recieve() throws IOException
+	public void sendMess() throws IOException
 	{
-		String rec = dis.readUTF();
-		return rec;
+		dos = new DataOutputStream(s.getOutputStream());
+		dos.writeUTF(br.readLine());
+		dos.flush();
 	}
-	
-	public void run()
+	public void close() throws IOException
 	{
-		String outp="";
-		String inp="";
-		try {
-			outp=br.readLine();
-			while(outp!="/0")
-			{
-				send(outp);
-				outp=br.readLine();
-			}
-			
-			inp=recieve();
-			while(inp!="/0")
-			{
-				System.out.println(inp);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
-
-	public static void main(String[] args) throws Exception 
-	{
-		Client client = new Client("localhost", 1024);
-		client.start();		
+		dos.close();
+		dis.close();
+		s.close();
 	}
 
 }
